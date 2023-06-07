@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:saad_project/pages/item_info.dart';
 import '../widgets/item.dart';
 
 class ListMaker extends StatelessWidget {
@@ -22,8 +23,17 @@ class ListMaker extends StatelessWidget {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Item(
-              item: list[index],
+            child: InkWell(
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ItemInfo(
+                    item: list[index],
+                  ),
+                ),
+              ),
+              child: Item(
+                item: list[index],
+              ),
             ),
           );
         },

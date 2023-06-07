@@ -23,13 +23,16 @@ class Item extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: Row(
         children: [
-          ClipRect(
-            clipBehavior: Clip.hardEdge,
-            child: Image.asset(
-              item["image"] as String,
-              height: 100,
-              width: 100,
-              fit: BoxFit.cover,
+          Hero(
+            tag: "${item["image"]}img",
+            child: ClipRect(
+              clipBehavior: Clip.hardEdge,
+              child: Image.asset(
+                item["image"] as String,
+                height: 100,
+                width: 100,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           const SizedBox(

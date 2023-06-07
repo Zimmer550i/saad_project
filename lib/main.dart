@@ -9,10 +9,11 @@ class MyApp extends StatelessWidget {
   //rgb(245, 246, 248)
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: "Uniwide Group",
-      color: Color.fromRGBO(245, 246, 248, 1),
-      home: Homepage(),
+      color: const Color.fromRGBO(245, 246, 248, 1),
+      theme: ThemeData(useMaterial3: true),
+      home: const Homepage(),
     );
   }
 }
