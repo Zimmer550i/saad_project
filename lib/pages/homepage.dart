@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:saad_project/pages/add_item.dart';
 import 'package:saad_project/utils.dart/list_maker.dart';
 import 'package:saad_project/utils.dart/tab_bar_icons_icons.dart';
-
-import '../utils.dart/constants.dart';
-
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
 
@@ -113,17 +111,27 @@ class Homepage extends StatelessWidget {
               Expanded(
                 child: TabBarView(
                   children: [
-                    ListMaker(list: shoes),
-                    ListMaker(list: drugs),
-                    ListMaker(list: electronics),
-                    ListMaker(list: fruits),
-                    ListMaker(list: groceries),
+                    ListMaker(category: "Shoes"),
+                    ListMaker(category: "Medicines"),
+                    ListMaker(category: "Electronics"),
+                    ListMaker(category: "Fruites"),
+                    ListMaker(category: "Groceries"),
                   ],
                 ),
               ),
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const AddItem(),
+            ),
+          );
+        },
       ),
     );
   }

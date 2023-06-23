@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "165406601358",
+    "firebase_url": "https://uniwideapp-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "uniwideapp",
+    "storage_bucket": "uniwideapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165406601358:android:f4fb935d3e3828e223d9df",
+        "android_client_info": {
+          "package_name": "com.example.saad_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165406601358-47c1r4n9upobgdleltgohpa36li923g1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqXPc_6Q9PZbU1GLlKsE32OQt8NMIyGfs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165406601358-47c1r4n9upobgdleltgohpa36li923g1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

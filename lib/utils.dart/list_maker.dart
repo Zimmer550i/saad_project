@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:saad_project/controllers/item_controller.dart';
 import 'package:saad_project/pages/item_info.dart';
-import '../widgets/item.dart';
+import '../widgets/item_card.dart';
 
 class ListMaker extends StatelessWidget {
-  final List<Map<String, Object>> list;
-  const ListMaker({
+  final ItemController itemController = Get.put(ItemController());
+  String category;
+  ListMaker({
     super.key,
-    required this.list,
+    required this.category,
   });
 
   @override
@@ -15,28 +18,37 @@ class ListMaker extends StatelessWidget {
       thickness: 6,
       radius: const Radius.circular(2),
       interactive: true,
-      child: ListView.builder(
-        physics: const BouncingScrollPhysics(
-          decelerationRate: ScrollDecelerationRate.fast,
-        ),
-        itemCount: list.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: InkWell(
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ItemInfo(
-                    item: list[index],
-                  ),
-                ),
-              ),
-              child: Item(
-                item: list[index],
-              ),
+      child: GetX<ItemController>(
+        builder: (controller) {
+          return ListView.builder(
+            physics: const BouncingScrollPhysics(
+              decelerationRate: ScrollDecelerationRate.fast,
             ),
+            itemCount: controller.items.length,
+            itemBuilder: (context, index) {
+              if (controller.items[index].category == category) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ItemInfo(
+                          item: controller.items[index],
+                        ),
+                      ),
+                    ),
+                    child: ItemCard(
+                      item: controller.items[index],
+                    ),
+                  ),
+                );
+              }
+              else{
+                return Container();
+              }
+            },
           );
-        },
+        }
       ),
     );
   }

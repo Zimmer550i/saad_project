@@ -1,8 +1,11 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class Item extends StatelessWidget {
-  final Map<String, Object> item;
-  const Item({super.key, required this.item});
+import 'package:flutter/material.dart';
+import 'package:saad_project/models/item.dart';
+
+class ItemCard extends StatelessWidget {
+  final Item item;
+  const ItemCard({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +27,22 @@ class Item extends StatelessWidget {
       child: Row(
         children: [
           Hero(
-            tag: "${item["image"]}img",
+            tag: "${item.prodID}img",
             child: ClipRect(
               clipBehavior: Clip.hardEdge,
-              child: Image.asset(
-                item["image"] as String,
-                height: 100,
-                width: 100,
-                fit: BoxFit.cover,
-              ),
+              child: item.photoUrl.startsWith("assets/")
+                  ? Image.asset(
+                      item.photoUrl,
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.file(
+                      File(item.photoUrl),
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
           const SizedBox(
@@ -43,7 +53,7 @@ class Item extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                item["name"] as String,
+                item.name,
                 style: const TextStyle(
                   fontFamily: "Geologica",
                   fontSize: 28,
@@ -56,7 +66,7 @@ class Item extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "${item["stock"]} pcs \u2022 ${item["color"]}",
+                    "${item.quantity} pcs \u2022 ${item.date}",
                     textAlign: TextAlign.start,
                     style: const TextStyle(
                       fontFamily: "Geologica",
@@ -66,7 +76,7 @@ class Item extends StatelessWidget {
                 ],
               ),
               Text(
-                "৳${item["price"]}",
+                "৳${item.price}",
                 style: const TextStyle(
                   fontFamily: "Geologica",
                   fontSize: 18,
