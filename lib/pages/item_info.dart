@@ -17,7 +17,8 @@ class _ItemInfoState extends State<ItemInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
+        height: 70,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
