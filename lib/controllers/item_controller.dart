@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:saad_project/models/item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,11 +32,11 @@ class ItemController extends GetxController {
       items.add(
         Item(
           prodID: "123",
-          name: "Item",
-          price: 400,
-          quantity: 50,
-          discription: "some discription",
-          category: "Shoes",
+          name: "Apple",
+          price: 120,
+          quantity: 200,
+          discription: "Ripe apples. Picked from the best Farms out there",
+          category: "Fruites",
           variant: [],
           photoUrl: "assets/apple.jpg",
           date: DateTime.now(),

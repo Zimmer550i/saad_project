@@ -6,7 +6,7 @@ import '../widgets/item_card.dart';
 
 class ListMaker extends StatelessWidget {
   final ItemController itemController = Get.put(ItemController());
-  String category;
+  final String category;
   ListMaker({
     super.key,
     required this.category,

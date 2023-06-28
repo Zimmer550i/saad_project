@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:saad_project/controllers/item_controller.dart';
-import 'package:saad_project/resources/storage_methods.dart';
 import 'package:saad_project/utils.dart/constants.dart';
 import 'package:uuid/uuid.dart';
 
@@ -214,7 +213,7 @@ class _AddItemState extends State<AddItem> {
       );
 
       itemController.items.add(newItem);
-      print(itemController.items.toString());
+      // print(itemController.items.toString());
     // }
   }
 
