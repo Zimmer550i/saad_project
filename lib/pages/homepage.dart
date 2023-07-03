@@ -1,9 +1,31 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:saad_project/pages/add_item.dart';
 import 'package:saad_project/utils.dart/list_maker.dart';
 import 'package:saad_project/utils.dart/tab_bar_icons_icons.dart';
-class Homepage extends StatelessWidget {
+
+class Homepage extends StatefulWidget {
   const Homepage({super.key});
+
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    initFirebase();
+  }
+
+  void initFirebase() async {
+    await Firebase.initializeApp();
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,15 +131,19 @@ class Homepage extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: TabBarView(
-                  children: [
-                    ListMaker(category: "Shoes"),
-                    ListMaker(category: "Medicines"),
-                    ListMaker(category: "Electronics"),
-                    ListMaker(category: "Fruites"),
-                    ListMaker(category: "Groceries"),
-                  ],
-                ),
+                child: isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : TabBarView(
+                        children: [
+                          ListMaker(category: "Shoes"),
+                          ListMaker(category: "Medicines"),
+                          ListMaker(category: "Electronics"),
+                          ListMaker(category: "Fruites"),
+                          ListMaker(category: "Groceries"),
+                        ],
+                      ),
               ),
             ],
           ),

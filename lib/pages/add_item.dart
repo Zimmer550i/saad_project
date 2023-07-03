@@ -3,10 +3,7 @@ import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:saad_project/controllers/item_controller.dart';
 import 'package:saad_project/resources/storage_methods.dart';
 import 'package:saad_project/utils.dart/constants.dart';
 import 'package:uuid/uuid.dart';
@@ -21,8 +18,6 @@ class AddItem extends StatefulWidget {
 }
 
 class _AddItemState extends State<AddItem> {
-  ItemController itemController = Get.find<ItemController>();
-
   XFile? image;
   TextEditingController prodName = TextEditingController();
   TextEditingController prodDiscription = TextEditingController();
@@ -39,7 +34,10 @@ class _AddItemState extends State<AddItem> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back_ios_new_rounded),
+        leading: InkWell(
+          onTap: () => Navigator.of(context).pop(),
+          child: const Icon(Icons.arrow_back_ios_new_rounded),
+        ),
         title: const Text("Add Product"),
       ),
       body: SingleChildScrollView(
@@ -235,13 +233,9 @@ class _AddItemState extends State<AddItem> {
         date: DateTime.now(),
       );
 
-      itemController.items.add(newItem);
-
       res = await FirebaseMethods().uploadProduct(newItem);
 
-      setState(() {
-        
-      });
+      setState(() {});
 
       setState(() {
         isLoading = false;

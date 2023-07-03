@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'pages/homepage.dart';
 
@@ -10,7 +9,6 @@ class MyApp extends StatelessWidget {
   //rgb(245, 246, 248)
   @override
   Widget build(BuildContext context) {
-    Firebase.initializeApp();
     return MaterialApp(
       title: "Uniwide Group",
       color: const Color.fromRGBO(245, 246, 248, 1),
