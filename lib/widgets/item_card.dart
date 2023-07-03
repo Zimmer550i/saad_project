@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:saad_project/models/item.dart';
+import 'package:saad_project/models/product.dart';
 
 class ItemCard extends StatelessWidget {
-  final Item item;
-  const ItemCard({super.key, required this.item});
+  final Product product;
+  const ItemCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +27,18 @@ class ItemCard extends StatelessWidget {
       child: Row(
         children: [
           Hero(
-            tag: "${item.prodID}img",
+            tag: "${product.prodID}img",
             child: ClipRect(
               clipBehavior: Clip.hardEdge,
-              child: item.photoUrl.startsWith("assets/")
+              child: product.photoUrl == ""
                   ? Image.asset(
-                      item.photoUrl,
+                      "assets/no_img.png",
                       height: 100,
                       width: 100,
                       fit: BoxFit.cover,
                     )
-                  : Image.file(
-                      File(item.photoUrl),
+                  : Image.network(
+                      product.photoUrl,
                       height: 100,
                       width: 100,
                       fit: BoxFit.cover,
@@ -53,7 +53,7 @@ class ItemCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                item.name,
+                product.name,
                 style: const TextStyle(
                   fontFamily: "Geologica",
                   fontSize: 28,
@@ -66,7 +66,7 @@ class ItemCard extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "${item.quantity} pcs \u2022 ${item.date}",
+                    "${product.quantity} pcs \u2022 ${product.date}",
                     textAlign: TextAlign.start,
                     style: const TextStyle(
                       fontFamily: "Geologica",
@@ -76,7 +76,7 @@ class ItemCard extends StatelessWidget {
                 ],
               ),
               Text(
-                "৳${item.price}",
+                "৳${product.price}",
                 style: const TextStyle(
                   fontFamily: "Geologica",
                   fontSize: 18,

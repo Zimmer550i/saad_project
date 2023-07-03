@@ -1,6 +1,6 @@
 import 'package:saad_project/models/variant.dart';
 
-class Item {
+class Product{
   String prodID;
   String name;
   int price;
@@ -11,7 +11,7 @@ class Item {
   String photoUrl;
   DateTime date;
 
-  Item({
+  Product({
     required this.prodID,
     required this.name,
     required this.price,
@@ -23,7 +23,7 @@ class Item {
     required this.date,
   });
 
-  Item.fromJson(Map<String, dynamic> json)
+  Product.fromJson(Map<String, dynamic> json)
       : prodID = json['prodID'],
         name = json['name'],
         price = json['price'],

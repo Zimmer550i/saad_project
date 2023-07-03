@@ -2,14 +2,16 @@ import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:saad_project/controllers/item_controller.dart';
+import 'package:saad_project/resources/storage_methods.dart';
 import 'package:saad_project/utils.dart/constants.dart';
 import 'package:uuid/uuid.dart';
 
-import '../models/item.dart';
+import '../models/product.dart';
 
 class AddItem extends StatefulWidget {
   const AddItem({super.key});
@@ -21,13 +23,15 @@ class AddItem extends StatefulWidget {
 class _AddItemState extends State<AddItem> {
   ItemController itemController = Get.find<ItemController>();
 
-  String? imagePath;
+  XFile? image;
   TextEditingController prodName = TextEditingController();
   TextEditingController prodDiscription = TextEditingController();
   TextEditingController price = TextEditingController();
   TextEditingController quantity = TextEditingController();
   TextEditingController overheadCost = TextEditingController();
 
+  bool isLoading = false;
+  String res = "";
   String? dropdownValue;
   int expensePerProduct = 0;
 
@@ -46,7 +50,7 @@ class _AddItemState extends State<AddItem> {
             bottom: 25,
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               textInputField("Product Name", prodName),
               textInputField("Product Price", price, isNumber: true),
@@ -95,12 +99,12 @@ class _AddItemState extends State<AddItem> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  imagePath == null
+                  image == null
                       ? Container()
                       : TextButton(
                           onPressed: () {
                             setState(() {
-                              imagePath = null;
+                              image = null;
                             });
                           },
                           child: const Text("Delete"),
@@ -112,7 +116,7 @@ class _AddItemState extends State<AddItem> {
                 color: Colors.deepOrange,
                 strokeWidth: 2,
                 dashPattern: const [5, 5],
-                child: imagePath == null
+                child: image == null
                     ? Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         child: Row(
@@ -163,7 +167,7 @@ class _AddItemState extends State<AddItem> {
                           minWidth: double.infinity,
                         ),
                         child: Image.file(
-                          File(imagePath!),
+                          File(image!.path),
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -180,10 +184,23 @@ class _AddItemState extends State<AddItem> {
                       height: 10,
                     ),
               discriptionInputField("Product Discription", prodDiscription),
-              ElevatedButton(
-                onPressed: addProd,
-                child: const Text("Add This Product"),
+              Text(
+                res,
+                style: const TextStyle(color: Colors.grey),
               ),
+              res != "Product has been Added"
+                  ? ElevatedButton(
+                      onPressed: addProd,
+                      child: isLoading
+                          ? const CircularProgressIndicator()
+                          : const Text("Add This Product"),
+                    )
+                  : ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text("Go Back"),
+                    ),
             ],
           ),
         ),
@@ -192,15 +209,21 @@ class _AddItemState extends State<AddItem> {
   }
 
   void addProd() async {
-    // if (prodName.text != "" && price.text != "" && dropdownValue != null) {
+    if (prodName.text.isNotEmpty &&
+        price.text.isNotEmpty &&
+        dropdownValue != null) {
+      setState(() {
+        isLoading = true;
+      });
       String prodID = const Uuid().v4();
-      if (imagePath != null) {
-        // imagePath = await movePhotoToAppDirectory(imagePath!, prodID);
-      } else {
-        imagePath = "assets/no_img.png";
+      String imagePath = "";
+      if (image != null) {
+        String path = "products/$prodID.jpg";
+        Uint8List temp = await File(image!.path).readAsBytes();
+        imagePath = await FirebaseMethods().uploadImageToStorage(path, temp);
       }
 
-      var newItem = Item(
+      var newItem = Product(
         prodID: prodID,
         name: prodName.text,
         price: int.parse(price.text),
@@ -208,25 +231,25 @@ class _AddItemState extends State<AddItem> {
         discription: prodDiscription.text,
         category: dropdownValue!,
         variant: [],
-        photoUrl: imagePath ?? "",
+        photoUrl: imagePath,
         date: DateTime.now(),
       );
 
       itemController.items.add(newItem);
-      // print(itemController.items.toString());
-    // }
-  }
 
-  Future<String> movePhotoToAppDirectory(String prevPath, String prodID) async {
-    final Directory appDir = await getApplicationDocumentsDirectory();
-    final File photoFile = File(prevPath);
-    final String newFilePath = '${appDir.path}/img/smaple.jpg';
+      res = await FirebaseMethods().uploadProduct(newItem);
 
-    if (await photoFile.exists()) {
-      await photoFile.copy(newFilePath);
-      return newFilePath;
+      setState(() {
+        
+      });
+
+      setState(() {
+        isLoading = false;
+      });
     } else {
-      throw Exception('Source file does not exist at $prevPath');
+      setState(() {
+        res = "Please provide required informations";
+      });
     }
   }
 
@@ -271,7 +294,7 @@ class _AddItemState extends State<AddItem> {
 
     if (temp != null) {
       setState(() {
-        imagePath = temp.path;
+        image = temp;
       });
     }
   }

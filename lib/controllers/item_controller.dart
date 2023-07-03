@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:saad_project/models/item.dart';
+import 'package:saad_project/models/product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ItemController extends GetxController {
-  var items = <Item>[].obs;
+  var items = <Product>[].obs;
 
   @override
   void onInit() {
@@ -17,20 +17,20 @@ class ItemController extends GetxController {
       // items = retriveItems.get("savedItems");
     } else {
       items.add(
-        Item(
+        Product(
           prodID: "123",
-          name: "Item",
+          name: "Product",
           price: 400,
           quantity: 50,
           discription: "some discription",
           category: "Electronics",
           variant: [],
-          photoUrl: "assets/no_img.png",
+          photoUrl: "",
           date: DateTime.now(),
         ),
       );
       items.add(
-        Item(
+        Product(
           prodID: "123",
           name: "Apple",
           price: 120,
@@ -38,7 +38,7 @@ class ItemController extends GetxController {
           discription: "Ripe apples. Picked from the best Farms out there",
           category: "Fruites",
           variant: [],
-          photoUrl: "assets/apple.jpg",
+          photoUrl: "",
           date: DateTime.now(),
         ),
       );

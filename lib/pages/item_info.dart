@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:saad_project/models/item.dart';
+import 'package:saad_project/models/product.dart';
 
 class ItemInfo extends StatefulWidget {
-  final Item item;
-  const ItemInfo({super.key, required this.item});
+  final Product product;
+  const ItemInfo({super.key, required this.product});
 
   @override
   State<ItemInfo> createState() => _ItemInfoState();
@@ -48,19 +48,25 @@ class _ItemInfoState extends State<ItemInfo> {
           child: Column(
             children: [
               Hero(
-                tag: "${widget.item.prodID}img",
+                tag: "${widget.product.prodID}img",
                 child: GestureDetector(
                   onDoubleTap: () {
                     setState(() {
                       coverFit = !coverFit;
                     });
                   },
-                  child: Image.asset(
-                    widget.item.photoUrl,
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.width,
-                    fit: coverFit ? BoxFit.cover : BoxFit.contain,
-                  ),
+                  child: widget.product.photoUrl == ""
+                      ? Image.asset(
+                          "assets/no_img.png",
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.width,
+                        )
+                      : Image.network(
+                          widget.product.photoUrl,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.width,
+                          fit: coverFit ? BoxFit.cover : BoxFit.contain,
+                        ),
                 ),
               ),
               Padding(
@@ -74,7 +80,7 @@ class _ItemInfoState extends State<ItemInfo> {
                       child: FittedBox(
                         fit: BoxFit.fitWidth,
                         child: Text(
-                          widget.item.name,
+                          widget.product.name,
                           maxLines: 3,
                           style: const TextStyle(
                             fontFamily: "Geologica",
@@ -89,8 +95,9 @@ class _ItemInfoState extends State<ItemInfo> {
                       height: 70,
                       child: Row(
                         children: [
-                          detailedInfo("Price", widget.item.price.toString()),
-                          detailedInfo("Category", widget.item.category),
+                          detailedInfo(
+                              "Price", widget.product.price.toString()),
+                          detailedInfo("Category", widget.product.category),
                         ],
                       ),
                     ),
@@ -100,14 +107,14 @@ class _ItemInfoState extends State<ItemInfo> {
                       child: Row(
                         children: [
                           detailedInfo(
-                              "Quantity", widget.item.quantity.toString()),
+                              "Quantity", widget.product.quantity.toString()),
                           detailedInfo("Date Added",
-                              DateFormat.yMMMMd().format(widget.item.date)),
+                              DateFormat.yMMMMd().format(widget.product.date)),
                         ],
                       ),
                     ),
                     Text(
-                      widget.item.discription,
+                      widget.product.discription,
                       textAlign: TextAlign.left,
                       style: const TextStyle(
                         fontFamily: "Geologica",

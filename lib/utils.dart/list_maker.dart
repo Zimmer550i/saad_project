@@ -33,12 +33,12 @@ class ListMaker extends StatelessWidget {
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => ItemInfo(
-                          item: controller.items[index],
+                          product: controller.items[index],
                         ),
                       ),
                     ),
                     child: ItemCard(
-                      item: controller.items[index],
+                      product: controller.items[index],
                     ),
                   ),
                 );
