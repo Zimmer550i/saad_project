@@ -4,7 +4,9 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:saad_project/resources/storage_methods.dart';
+import 'package:saad_project/models/variant.dart';
+import 'package:saad_project/pages/add_variant.dart';
+import 'package:saad_project/resources/firebase_methods.dart';
 import 'package:saad_project/utils.dart/constants.dart';
 import 'package:uuid/uuid.dart';
 
@@ -29,6 +31,7 @@ class _AddItemState extends State<AddItem> {
   String res = "";
   String? dropdownValue;
   int expensePerProduct = 0;
+  List<Variant> variant = [];
 
   @override
   Widget build(BuildContext context) {
@@ -221,6 +224,14 @@ class _AddItemState extends State<AddItem> {
         imagePath = await FirebaseMethods().uploadImageToStorage(path, temp);
       }
 
+      if (variant.isNotEmpty) {
+        int count = 0;
+        for (var element in variant) {
+          count += element.quantity;
+        }
+        quantity.text = count.toString();
+      }
+
       var newItem = Product(
         prodID: prodID,
         name: prodName.text,
@@ -228,7 +239,7 @@ class _AddItemState extends State<AddItem> {
         quantity: quantity.text.isNotEmpty ? int.parse(quantity.text) : 0,
         discription: prodDiscription.text,
         category: dropdownValue!,
-        variant: [],
+        variant: variant,
         photoUrl: imagePath,
         date: DateTime.now(),
       );
@@ -252,7 +263,13 @@ class _AddItemState extends State<AddItem> {
       width: double.infinity,
       padding: const EdgeInsets.only(top: 10),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => AddVariant(list: variant),
+            ),
+          );
+        },
         child: const Text("Choose Color and Size"),
       ),
     );

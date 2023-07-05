@@ -135,7 +135,7 @@ class _HomepageState extends State<Homepage> {
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
-                    : TabBarView(
+                    : const TabBarView(
                         children: [
                           ListMaker(category: "Shoes"),
                           ListMaker(category: "Medicines"),

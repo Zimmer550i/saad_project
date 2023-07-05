@@ -6,7 +6,7 @@ import '../widgets/item_card.dart';
 
 class ListMaker extends StatelessWidget {
   final String category;
-  ListMaker({
+  const ListMaker({
     super.key,
     required this.category,
   });

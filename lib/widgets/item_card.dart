@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:saad_project/models/product.dart';
 
 class ItemCard extends StatelessWidget {
@@ -28,8 +27,8 @@ class ItemCard extends StatelessWidget {
         children: [
           Hero(
             tag: "${product.prodID}img",
-            child: ClipRect(
-              clipBehavior: Clip.hardEdge,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
               child: product.photoUrl == ""
                   ? Image.asset(
                       "assets/no_img.png",
@@ -66,7 +65,7 @@ class ItemCard extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "${product.quantity} pcs \u2022 ${product.date}",
+                    "${product.quantity} pcs \u2022 ${formatElapsedTime(product.date)}",
                     textAlign: TextAlign.start,
                     style: const TextStyle(
                       fontFamily: "Geologica",
@@ -87,5 +86,23 @@ class ItemCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String formatElapsedTime(DateTime dateTime) {
+    final now = DateTime.now();
+    final difference = now.difference(dateTime);
+
+    if (difference.inSeconds < 60) {
+      return 'Just now';
+    } else if (difference.inMinutes < 60) {
+      return '${difference.inMinutes} minutes ago';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours} hours ago';
+    } else if (difference.inDays < 30) {
+      return '${difference.inDays} days ago';
+    } else {
+      final format = DateFormat('yyyy-MM-dd');
+      return format.format(dateTime);
+    }
   }
 }

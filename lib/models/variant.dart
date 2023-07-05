@@ -1,6 +1,6 @@
 class Variant {
   int quantity;
-  int size;
+  String size;
   String color;
 
   Variant({

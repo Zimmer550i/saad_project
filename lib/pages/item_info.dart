@@ -49,24 +49,45 @@ class _ItemInfoState extends State<ItemInfo> {
             children: [
               Hero(
                 tag: "${widget.product.prodID}img",
-                child: GestureDetector(
-                  onDoubleTap: () {
-                    setState(() {
-                      coverFit = !coverFit;
-                    });
-                  },
-                  child: widget.product.photoUrl == ""
-                      ? Image.asset(
-                          "assets/no_img.png",
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.2),
+                          offset: Offset(0, 4),
+                          blurRadius: 5,
                         )
-                      : Image.network(
-                          widget.product.photoUrl,
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.width,
-                          fit: coverFit ? BoxFit.cover : BoxFit.contain,
-                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: GestureDetector(
+                        onDoubleTap: () {
+                          setState(() {
+                            coverFit = !coverFit;
+                          });
+                        },
+                        child: widget.product.photoUrl == ""
+                            ? Image.asset(
+                                "assets/no_img.png",
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.width,
+                              )
+                            : Image.network(
+                                widget.product.photoUrl,
+                                width: MediaQuery.of(context).size.width,
+                                height: coverFit ? MediaQuery.of(context).size.width : null,
+                                fit: coverFit ? BoxFit.cover : BoxFit.contain,
+                              ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Padding(
@@ -75,19 +96,13 @@ class _ItemInfoState extends State<ItemInfo> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 5 * 3,
-                      child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Text(
-                          widget.product.name,
-                          maxLines: 3,
-                          style: const TextStyle(
-                            fontFamily: "Geologica",
-                            fontSize: 48,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                    Text(
+                      widget.product.name,
+                      maxLines: 3,
+                      style: const TextStyle(
+                        fontFamily: "Geologica",
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(
