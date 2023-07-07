@@ -19,10 +19,26 @@ class FirebaseMethods {
     return downloadUrl;
   }
 
-  Future<String> uploadProduct (Product product) async {
+  Future<String> uploadProduct(Product product) async {
     try {
-      _firestore.collection("products").doc(product.prodID).set(product.toJson());
+      _firestore
+          .collection("products")
+          .doc(product.prodID)
+          .set(product.toJson());
       return "Product has been Added";
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String> deleteProduct(Product product) async {
+    try {
+      if (product.photoUrl != "") {
+        String path = "products/${product.prodID}.jpg";
+        _storage.ref().child(path).delete();
+      }
+      _firestore.collection('products').doc(product.prodID).delete();
+      return "Product Deleted";
     } catch (e) {
       return e.toString();
     }

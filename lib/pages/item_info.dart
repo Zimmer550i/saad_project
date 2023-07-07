@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:saad_project/models/product.dart';
+import 'package:saad_project/resources/firebase_methods.dart';
 
 class ItemInfo extends StatefulWidget {
   final Product product;
@@ -16,18 +17,19 @@ class _ItemInfoState extends State<ItemInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       bottomNavigationBar: SizedBox(
         height: 70,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                confirmDelete(context, widget.product);
+              },
               child: const Row(
                 children: [
-                  Icon(Icons.shopping_cart),
-                  Text("Buy"),
+                  Icon(Icons.delete_forever_rounded),
+                  Text("Delete"),
                 ],
               ),
             ),
@@ -65,27 +67,56 @@ class _ItemInfoState extends State<ItemInfo> {
                         )
                       ],
                     ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: GestureDetector(
-                        onDoubleTap: () {
-                          setState(() {
-                            coverFit = !coverFit;
-                          });
-                        },
-                        child: widget.product.photoUrl == ""
-                            ? Image.asset(
-                                "assets/no_img.png",
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.width,
-                              )
-                            : Image.network(
-                                widget.product.photoUrl,
-                                width: MediaQuery.of(context).size.width,
-                                height: coverFit ? MediaQuery.of(context).size.width : null,
-                                fit: coverFit ? BoxFit.cover : BoxFit.contain,
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: GestureDetector(
+                            onDoubleTap: () {
+                              setState(() {
+                                coverFit = !coverFit;
+                              });
+                            },
+                            child: widget.product.photoUrl == ""
+                                ? Image.asset(
+                                    "assets/no_img.png",
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.width,
+                                  )
+                                : Image.network(
+                                    widget.product.photoUrl,
+                                    width: MediaQuery.of(context).size.width,
+                                    height: coverFit
+                                        ? MediaQuery.of(context).size.width
+                                        : null,
+                                    fit: coverFit
+                                        ? BoxFit.cover
+                                        : BoxFit.contain,
+                                  ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                top: 5,
+                                bottom: 5,
+                                left: 5,
+                                right: 6,
                               ),
-                      ),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withAlpha(200),
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: const Icon(Icons.arrow_back_ios_new),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -178,5 +209,42 @@ class _ItemInfoState extends State<ItemInfo> {
         ],
       ),
     );
+  }
+
+  void confirmDelete(BuildContext context, Product product) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete'),
+          content: const Text('Are you sure you want to proceed?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                delete(context, product);
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void delete(BuildContext newContext, Product product) async {
+    final snackBar = SnackBar(
+      content: Text(await FirebaseMethods().deleteProduct(product)),
+    );
+
+    // ignore: use_build_context_synchronously
+    ScaffoldMessenger.of(newContext).showSnackBar(snackBar);
   }
 }
