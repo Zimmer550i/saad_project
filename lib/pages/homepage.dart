@@ -41,7 +41,7 @@ class _HomepageState extends State<Homepage> {
                 child: Row(
                   children: [
                     Image.asset(
-                      "assets/logo.png",
+                      "assets/uniwide_logo_without_name.png",
                       width: 50,
                       height: 50,
                       alignment: Alignment.topLeft,
