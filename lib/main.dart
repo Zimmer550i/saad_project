@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:saad_project/pages/login.dart';
+import 'package:uniwide/pages/login.dart';
 
 void main() => runApp(const MyApp());
 
@@ -12,10 +12,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Firebase.initializeApp();
     return MaterialApp(
-      title: "Uniwide Group",
+      title: "uniwide Group",
       // color: const Color.fromRGBO(245, 246, 248, 1),
       color: Colors.grey[300],
-      theme: ThemeData(useMaterial3: true),
+      theme: ThemeData(useMaterial3: true, fontFamily: "Geologica"),
       home: const Login(),
     );
   }

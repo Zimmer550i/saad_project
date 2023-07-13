@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:saad_project/pages/homepage.dart';
+import 'package:uniwide/pages/homepage.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -10,7 +10,9 @@ class LoginPage extends StatelessWidget {
 
   // sign user in method
   void signUserIn(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const Homepage()),);
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const Homepage()),
+    );
   }
 
   @override
@@ -25,7 +27,10 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 50),
 
               // logo
-              Image.asset("assets/logo_with_name.png", height: 100,),
+              Image.asset(
+                "assets/logo_with_name.png",
+                height: 100,
+              ),
 
               const SizedBox(height: 50),
 
@@ -73,7 +78,7 @@ class LoginPage extends StatelessWidget {
               ),
 
               const SizedBox(height: 25),
-              
+
               // sign in button
               myButton(
                 onTap: () => signUserIn(context),

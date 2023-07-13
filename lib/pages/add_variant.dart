@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:saad_project/models/variant.dart';
+import 'package:uniwide/models/variant.dart';
 
 class AddVariant extends StatefulWidget {
   final List<Variant> list;

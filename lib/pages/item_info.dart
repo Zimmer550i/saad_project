@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:saad_project/models/product.dart';
-import 'package:saad_project/resources/firebase_methods.dart';
+import 'package:uniwide/models/product.dart';
+import 'package:uniwide/models/variant.dart';
+import 'package:uniwide/resources/firebase_methods.dart';
+import 'package:uniwide/widgets/variants_list.dart';
 
 class ItemInfo extends StatefulWidget {
   final Product product;
@@ -30,6 +32,15 @@ class _ItemInfoState extends State<ItemInfo> {
                 children: [
                   Icon(Icons.delete_forever_rounded),
                   Text("Delete"),
+                ],
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Row(
+                children: [
+                  Icon(Icons.edit_note_rounded),
+                  Text("Edit"),
                 ],
               ),
             ),
@@ -131,7 +142,6 @@ class _ItemInfoState extends State<ItemInfo> {
                       widget.product.name,
                       maxLines: 3,
                       style: const TextStyle(
-                        fontFamily: "Geologica",
                         fontSize: 48,
                         fontWeight: FontWeight.bold,
                       ),
@@ -159,23 +169,17 @@ class _ItemInfoState extends State<ItemInfo> {
                         ],
                       ),
                     ),
+                    widget.product.variant.isNotEmpty
+                        ? VariantsList(product: widget.product,)
+                        : Container(),
+                    const Text("Discription: "),
                     Text(
                       widget.product.discription,
                       textAlign: TextAlign.left,
                       style: const TextStyle(
-                        fontFamily: "Geologica",
                         fontSize: 18,
                       ),
                     ),
-                    // CircularPercentIndicator(
-                    //   radius: MediaQuery.of(context).size.width / 4,
-                    //   percent: stock / (stock + sold),
-                    //   lineWidth: 20,
-                    //   circularStrokeCap: CircularStrokeCap.round,
-                    //   progressColor: Colors.deepPurple,
-                    //   backgroundColor: Colors.deepPurple.shade100,
-                    //   center: Text("$stock/${stock + sold}"),
-                    // ),
                   ],
                 ),
               ),
@@ -194,14 +198,12 @@ class _ItemInfoState extends State<ItemInfo> {
           Text(
             head,
             style: const TextStyle(
-              fontFamily: "Geologica",
               fontSize: 14,
             ),
           ),
           Text(
             body,
             style: const TextStyle(
-              fontFamily: "Geologica",
               fontSize: 28,
               fontWeight: FontWeight.bold,
             ),

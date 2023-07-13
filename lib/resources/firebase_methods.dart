@@ -2,8 +2,9 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:saad_project/models/product.dart';
-import 'package:saad_project/models/app_user.dart';
+import 'package:uniwide/models/product.dart';
+import 'package:uniwide/models/app_user.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class FirebaseMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -19,6 +20,15 @@ class FirebaseMethods {
     TaskSnapshot snapshot = await uploadTask;
     String downloadUrl = await snapshot.ref.getDownloadURL();
     return downloadUrl;
+  }
+
+  Future<AppUser> getUserData() async{
+    User currentUser = _auth.currentUser!;
+
+    DocumentSnapshot snap = await _firestore.collection('users').doc(currentUser.uid).get();
+    Map<String, dynamic> snapshot = snap.data() as Map<String, dynamic>;
+
+    return AppUser.fromJson(snapshot);
   }
 
   Future<String> uploadProduct(Product product) async {
@@ -48,10 +58,23 @@ class FirebaseMethods {
 
   Future<String> emailSignInUser(String email, String password) async {
     try {
-      await _auth.signInWithEmailAndPassword(
+      UserCredential user = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
-      ); 
+      );
+      FlutterSecureStorage storage = const FlutterSecureStorage();
+
+      storage.write(key: 'loginToken', value: await user.user?.getIdToken());
+    } catch (e) {
+      return e.toString();
+    }
+
+    return "success";
+  }
+
+  Future<String> tokenSignInUser(String token) async {
+    try {
+      await _auth.signInWithCustomToken(token);
     } catch (e) {
       return e.toString();
     }
@@ -61,11 +84,11 @@ class FirebaseMethods {
 
   Future<String?> emailSignUpUser(String email, String password) async {
     try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-
 
       return userCredential.user?.uid;
     } catch (e) {
@@ -73,12 +96,9 @@ class FirebaseMethods {
     }
   }
 
-  Future<String> createUser(AppUser user)async{
+  Future<String> createUser(AppUser user) async {
     try {
-      _firestore
-          .collection("users")
-          .doc(user.userID)
-          .set(user.toJson());
+      _firestore.collection("users").doc(user.userID).set(user.toJson());
       return "User has been Added";
     } catch (e) {
       return e.toString();

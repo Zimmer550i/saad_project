@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:saad_project/pages/add_item.dart';
-import 'package:saad_project/utils.dart/list_maker.dart';
-import 'package:saad_project/utils.dart/tab_bar_icons_icons.dart';
+import 'package:uniwide/pages/add_item.dart';
+import 'package:uniwide/utils.dart/list_maker.dart';
+import 'package:uniwide/utils.dart/tab_bar_icons_icons.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -49,7 +49,6 @@ class _HomepageState extends State<Homepage> {
                     const Text(
                       "Uniwide Group",
                       style: TextStyle(
-                        fontFamily: "Geologica",
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                       ),

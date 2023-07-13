@@ -1,4 +1,4 @@
-name: saad_project
+name: uniwide
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -29,20 +29,17 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cloud_firestore: ^4.8.1
-  cupertino_icons: ^1.0.2
   dotted_border: ^2.0.0+3
   firebase_auth: ^4.6.3
   firebase_core: ^2.14.0
   firebase_storage: ^11.2.3
   flutter:
     sdk: flutter
+  flutter_secure_storage: ^8.0.0
   get: ^4.6.5
   google_fonts: ^4.0.4
   image_picker: ^0.8.7+5
   intl: ^0.18.1
-  path_provider: ^2.0.15
-  percent_indicator: ^4.2.3
-  shared_preferences: ^2.1.2
   uuid: ^3.0.7
 
 dev_dependencies:
@@ -80,7 +77,7 @@ flutter:
         - asset: fonts/TabBarIcons.ttf
     - family: Geologica
       fonts:
-        - asset: google_fonts\Geologica-VariableFont_CRSV,SHRP,slnt,wght.ttf
+        - asset: fonts\Geologica-VariableFont_CRSV,SHRP,slnt,wght.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

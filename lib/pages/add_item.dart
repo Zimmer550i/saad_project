@@ -4,10 +4,10 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:saad_project/models/variant.dart';
-import 'package:saad_project/pages/add_variant.dart';
-import 'package:saad_project/resources/firebase_methods.dart';
-import 'package:saad_project/utils.dart/constants.dart';
+import 'package:uniwide/models/variant.dart';
+import 'package:uniwide/pages/add_variant.dart';
+import 'package:uniwide/resources/firebase_methods.dart';
+import 'package:uniwide/utils.dart/constants.dart';
 import 'package:uuid/uuid.dart';
 
 import '../models/product.dart';

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:saad_project/models/product.dart';
-import 'package:saad_project/pages/item_info.dart';
+import 'package:uniwide/models/product.dart';
+import 'package:uniwide/pages/item_info.dart';
 import '../widgets/item_card.dart';
 
 class ListMaker extends StatelessWidget {

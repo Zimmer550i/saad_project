@@ -1,4 +1,4 @@
-package com.example.saad_project
+package com.example.uniwide
 
 import io.flutter.embedding.android.FlutterActivity
 

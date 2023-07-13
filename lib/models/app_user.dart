@@ -1,3 +1,5 @@
+import 'package:uniwide/models/product.dart';
+
 class AppUser {
   String userID;
   String mobileNumber;
@@ -5,6 +7,9 @@ class AppUser {
   String firstName;
   String lastName;
   String imgUrl;
+  bool isAdmin = false;
+  List<Product> cart = [];
+  List<String> likes = [];
 
   AppUser({
     required this.userID,
@@ -23,7 +28,7 @@ class AppUser {
       'email': email,
       'firstName': firstName,
       'lastName': lastName,
-      'imgUrl' : imgUrl,
+      'imgUrl': imgUrl,
     };
   }
 

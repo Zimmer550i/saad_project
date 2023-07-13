@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:saad_project/models/product.dart';
+import 'package:uniwide/models/product.dart';
 
 class ItemCard extends StatelessWidget {
   final Product product;
@@ -54,7 +54,6 @@ class ItemCard extends StatelessWidget {
               Text(
                 product.name,
                 style: const TextStyle(
-                  fontFamily: "Geologica",
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
@@ -68,7 +67,6 @@ class ItemCard extends StatelessWidget {
                     "${product.quantity} pcs \u2022 ${formatElapsedTime(product.date)}",
                     textAlign: TextAlign.start,
                     style: const TextStyle(
-                      fontFamily: "Geologica",
                       color: Color(0xff68717b),
                     ),
                   )
@@ -77,7 +75,6 @@ class ItemCard extends StatelessWidget {
               Text(
                 "৳${product.price}",
                 style: const TextStyle(
-                  fontFamily: "Geologica",
                   fontSize: 18,
                 ),
               ),

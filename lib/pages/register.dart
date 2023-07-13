@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:saad_project/models/app_user.dart';
-import 'package:saad_project/resources/firebase_methods.dart';
+import 'package:uniwide/models/app_user.dart';
+import 'package:uniwide/resources/firebase_methods.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -97,7 +97,8 @@ class _RegisterState extends State<Register> {
                           ? const CircularProgressIndicator()
                           : const Text(
                               "Sign Up",
-                              style: TextStyle(color: Colors.white, fontSize: 20),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
                             ),
                     ),
                   ),

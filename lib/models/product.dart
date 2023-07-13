@@ -1,6 +1,6 @@
-import 'package:saad_project/models/variant.dart';
+import 'package:uniwide/models/variant.dart';
 
-class Product{
+class Product {
   String prodID;
   String name;
   int price;
@@ -30,7 +30,8 @@ class Product{
         quantity = json['quantity'],
         category = json['category'],
         discription = json['discription'],
-        variant = List<Variant>.from(json['variant'].map((variantJson) => Variant.fromJson(variantJson))),
+        variant = List<Variant>.from(json['variant']
+            .map((variantJson) => Variant.fromJson(variantJson))),
         photoUrl = json['photoUrl'],
         date = DateTime.parse(json['date']);
 
