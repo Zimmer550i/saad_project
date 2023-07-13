@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uniwide/models/product.dart';
-import 'package:uniwide/models/variant.dart';
 import 'package:uniwide/resources/firebase_methods.dart';
 import 'package:uniwide/widgets/variants_list.dart';
 

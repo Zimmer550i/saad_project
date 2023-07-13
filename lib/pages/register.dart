@@ -17,6 +17,7 @@ class _RegisterState extends State<Register> {
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
 
+  bool obscurePass = true;
   String err = "";
   bool isLoading = false;
   bool checked = false;
@@ -42,9 +43,9 @@ class _RegisterState extends State<Register> {
               inputField("Phone Number", Icons.phone_android_rounded, phoneNum,
                   type: TextInputType.phone),
               inputField("Password", Icons.key_rounded, password,
-                  obscureText: true),
+                  isPassword: true),
               inputField("Confirm Password", Icons.key_rounded, confirmPassword,
-                  obscureText: true),
+                  isPassword: true),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -137,7 +138,7 @@ class _RegisterState extends State<Register> {
 
   Widget inputField(
       String name, IconData icon, TextEditingController controller,
-      {bool obscureText = false, TextInputType type = TextInputType.text}) {
+      {bool isPassword = false, TextInputType type = TextInputType.text}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
       child: Stack(
@@ -163,15 +164,22 @@ class _RegisterState extends State<Register> {
                     Expanded(
                       child: TextField(
                         controller: controller,
-                        decoration:
-                            const InputDecoration(border: InputBorder.none),
-                        obscureText: obscureText,
+                        decoration: const InputDecoration(
+                            isDense: true, border: InputBorder.none),
+                        obscureText: isPassword ? obscurePass: false,
                         keyboardType: type,
                       ),
                     ),
-                    Icon(
-                      icon,
-                      color: const Color(0xfff06000),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          obscurePass = !obscurePass;
+                        });
+                      },
+                      child: Icon(
+                        icon,
+                        color: const Color(0xfff06000),
+                      ),
                     ),
                   ],
                 ),
