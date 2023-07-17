@@ -1,7 +1,7 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:uniwide/pages/login.dart';
-import 'package:uniwide/pages/register.dart';
+import 'package:uniwide/utils.dart/check_token.dart';
 
 void main() => runApp(const MyApp());
 
@@ -12,12 +12,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Firebase.initializeApp();
+
     return MaterialApp(
-      title: "uniwide Group",
-      // color: const Color.fromRGBO(245, 246, 248, 1),
+      title: "Uniwide Group",
       color: Colors.grey[300],
       theme: ThemeData(useMaterial3: true, fontFamily: "Geologica"),
-      home: const Login(),
+      home: AnimatedSplashScreen(
+        duration: 1000,
+        animationDuration: const Duration(milliseconds: 500),
+        splash: "assets/uniwide_logo.png",
+        splashIconSize: 200,
+        nextScreen: const CheckToken(),
+      ),
     );
   }
 }

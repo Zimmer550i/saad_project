@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:uniwide/pages/homepage.dart';
 import 'package:uniwide/pages/register.dart';
 import 'package:uniwide/resources/firebase_methods.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -14,7 +13,6 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _pass = TextEditingController();
-  bool splash = true;
   bool isLoading = false;
   String errorText = "";
 
@@ -45,27 +43,6 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-    splashScreen();
-  }
-
-  void splashScreen() async {
-    FlutterSecureStorage storage = const FlutterSecureStorage();
-
-    if (await storage.containsKey(key: "loginToken")) {
-      String? token = await storage.read(key: "loginToken");
-      FirebaseMethods().tokenSignInUser(token!);
-
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => const Homepage(),
-        ),
-      );
-    } else {
-      setState(() {
-        splash = !splash;
-      });
-    }
   }
 
   @override
@@ -76,19 +53,15 @@ class _LoginState extends State<Login> {
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             width: MediaQuery.of(context).size.width,
-            height: splash
-                ? MediaQuery.of(context).size.height
-                : MediaQuery.of(context).size.height / 2.5,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
+            height: MediaQuery.of(context).size.height / 2.5,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [Color(0xfff06000), Color.fromARGB(255, 255, 140, 0)],
               ),
               borderRadius: BorderRadius.only(
-                bottomLeft: splash
-                    ? const Radius.circular(0)
-                    : const Radius.circular(150),
+                bottomLeft: Radius.circular(150),
               ),
             ),
             child: Center(

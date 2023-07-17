@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uniwide/models/product.dart';
+import 'package:uniwide/pages/sell_product.dart';
 import 'package:uniwide/resources/firebase_methods.dart';
 import 'package:uniwide/widgets/variants_list.dart';
 
@@ -13,8 +14,6 @@ class ItemInfo extends StatefulWidget {
 }
 
 class _ItemInfoState extends State<ItemInfo> {
-  bool coverFit = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +43,13 @@ class _ItemInfoState extends State<ItemInfo> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => SellProduct(product: widget.product),
+                  ),
+                );
+              },
               child: const Row(
                 children: [
                   Icon(Icons.attach_money_rounded),
@@ -81,29 +86,16 @@ class _ItemInfoState extends State<ItemInfo> {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: GestureDetector(
-                            onDoubleTap: () {
-                              setState(() {
-                                coverFit = !coverFit;
-                              });
-                            },
-                            child: widget.product.photoUrl == ""
-                                ? Image.asset(
-                                    "assets/no_img.png",
-                                    width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.width,
-                                  )
-                                : Image.network(
-                                    widget.product.photoUrl,
-                                    width: MediaQuery.of(context).size.width,
-                                    height: coverFit
-                                        ? MediaQuery.of(context).size.width
-                                        : null,
-                                    fit: coverFit
-                                        ? BoxFit.cover
-                                        : BoxFit.contain,
-                                  ),
-                          ),
+                          child: widget.product.photoUrl == ""
+                              ? Image.asset(
+                                  "assets/no_img.png",
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.width,
+                                )
+                              : Image.network(
+                                  widget.product.photoUrl,
+                                  width: MediaQuery.of(context).size.width,
+                                ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(5.0),
@@ -169,7 +161,9 @@ class _ItemInfoState extends State<ItemInfo> {
                       ),
                     ),
                     widget.product.variant.isNotEmpty
-                        ? VariantsList(product: widget.product,)
+                        ? VariantsList(
+                            product: widget.product,
+                          )
                         : Container(),
                     const Text("Discription: "),
                     Text(

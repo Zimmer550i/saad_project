@@ -7,6 +7,7 @@ class AppUser {
   String firstName;
   String lastName;
   String imgUrl;
+  DateTime dateCreated;
   bool isAdmin = false;
   List<Product> cart = [];
   List<String> likes = [];
@@ -18,7 +19,7 @@ class AppUser {
     required this.firstName,
     required this.lastName,
     required this.imgUrl,
-  });
+  }): dateCreated = DateTime.now();
 
   // Convert AppUser object to JSON
   Map<String, dynamic> toJson() {

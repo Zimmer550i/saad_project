@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uniwide/models/product.dart';
 import 'package:uniwide/models/app_user.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:uniwide/models/sales.dart';
 
 class FirebaseMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -22,10 +23,11 @@ class FirebaseMethods {
     return downloadUrl;
   }
 
-  Future<AppUser> getUserData() async{
+  Future<AppUser> getUserData() async {
     User currentUser = _auth.currentUser!;
 
-    DocumentSnapshot snap = await _firestore.collection('users').doc(currentUser.uid).get();
+    DocumentSnapshot snap =
+        await _firestore.collection('users').doc(currentUser.uid).get();
     Map<String, dynamic> snapshot = snap.data() as Map<String, dynamic>;
 
     return AppUser.fromJson(snapshot);
@@ -100,6 +102,19 @@ class FirebaseMethods {
     try {
       _firestore.collection("users").doc(user.userID).set(user.toJson());
       return "User has been Added";
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String> createSales(Sales sales, Product product) async {
+    try {
+      _firestore.collection("sales").doc(sales.salesId).set(sales.toJson());
+      _firestore
+          .collection("products")
+          .doc(product.prodID)
+          .update({"quantity": product.quantity - sales.quantity});
+      return "Sales information has been saved";
     } catch (e) {
       return e.toString();
     }
