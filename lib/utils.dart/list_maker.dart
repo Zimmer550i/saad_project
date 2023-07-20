@@ -18,7 +18,7 @@ class ListMaker extends StatelessWidget {
       radius: const Radius.circular(2),
       interactive: true,
       child: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('products').snapshots(),
+          stream: FirebaseFirestore.instance.collection('products').orderBy('date', descending: true).snapshots(),
           builder: (controller, snap) {
             if (snap.connectionState == ConnectionState.waiting) {
               return const Center(

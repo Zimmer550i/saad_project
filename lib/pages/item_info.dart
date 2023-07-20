@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uniwide/models/product.dart';
@@ -92,8 +93,11 @@ class _ItemInfoState extends State<ItemInfo> {
                                   width: MediaQuery.of(context).size.width,
                                   height: MediaQuery.of(context).size.width,
                                 )
-                              : Image.network(
-                                  widget.product.photoUrl,
+                              : CachedNetworkImage(
+                                  imageUrl: widget.product.photoUrl,
+                                  placeholder: (context, url) {
+                                    return const Center(child: CircularProgressIndicator(),);
+                                  },
                                   width: MediaQuery.of(context).size.width,
                                 ),
                         ),

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uniwide/models/product.dart';
@@ -36,8 +37,11 @@ class ItemCard extends StatelessWidget {
                       width: 100,
                       fit: BoxFit.cover,
                     )
-                  : Image.network(
-                      product.photoUrl,
+                  : CachedNetworkImage(
+                      imageUrl: product.photoUrl,
+                      placeholder: (context, url) {
+                        return const Center(child: CircularProgressIndicator());
+                      },
                       height: 100,
                       width: 100,
                       fit: BoxFit.cover,
@@ -61,15 +65,30 @@ class ItemCard extends StatelessWidget {
               Container(
                 height: 10,
               ),
+              product.quantity !=0 ?
+              Text(
+                "${product.quantity} pcs \u2022 ${formatElapsedTime(product.date)}",
+                textAlign: TextAlign.start,
+                style: const TextStyle(
+                  color: Color(0xff68717b),
+                ),
+              ) :
               Row(
                 children: [
                   Text(
-                    "${product.quantity} pcs \u2022 ${formatElapsedTime(product.date)}",
+                    "Not Available",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      color: Colors.red[400],
+                    ),
+                  ),
+                  Text(
+                    " \u2022 ${formatElapsedTime(product.date)}",
                     textAlign: TextAlign.start,
                     style: const TextStyle(
                       color: Color(0xff68717b),
                     ),
-                  )
+                  ),
                 ],
               ),
               Text(

@@ -109,7 +109,30 @@ class FirebaseMethods {
 
   Future<String> createSales(Sales sales, Product product) async {
     try {
-      _firestore.collection("sales").doc(sales.salesId).set(sales.toJson());
+      String monthYear = "${DateTime.now().month}_${DateTime.now().year}";
+      int prevProfit = 0;
+      // _firestore.collection("sales").doc(monthYear).collection('sales_items').doc(sales.salesId).set(sales.toJson());
+      DocumentSnapshot snapshot =
+          await _firestore.collection("sales").doc(monthYear).get();
+
+      if (snapshot.exists) {
+        Map<String, dynamic> map = snapshot.data()! as Map<String, dynamic>;
+        prevProfit = map["totalProfit"];
+      } else {
+        _firestore.collection("sales").doc(monthYear).set({
+          "totalProfit": 0,
+        });
+      }
+
+      _firestore
+          .collection("sales")
+          .doc(monthYear)
+          .collection('sales_items')
+          .add(sales.toJson());
+
+      _firestore.collection("sales").doc(monthYear).update(
+          {"totalProfit": prevProfit + (sales.profit * sales.quantity)});
+
       _firestore
           .collection("products")
           .doc(product.prodID)
