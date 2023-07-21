@@ -39,7 +39,8 @@ class ListMaker extends StatelessWidget {
               products.add(Product.fromJson(element.data()));
             }
 
-            return ListView.builder(
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               physics: const BouncingScrollPhysics(
                 decelerationRate: ScrollDecelerationRate.fast,
               ),

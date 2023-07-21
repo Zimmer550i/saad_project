@@ -24,7 +24,7 @@ class ItemCard extends StatelessWidget {
         ],
       ),
       padding: const EdgeInsets.all(8),
-      child: Row(
+      child: Column(
         children: [
           Hero(
             tag: "${product.prodID}img",
