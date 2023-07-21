@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uniwide/models/product.dart';
-import 'package:uniwide/pages/item_info.dart';
+import 'package:uniwide/pages/product_info.dart';
 import '../widgets/item_card.dart';
 
 class ListMaker extends StatelessWidget {
@@ -51,7 +51,7 @@ class ListMaker extends StatelessWidget {
                     child: InkWell(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => ItemInfo(
+                          builder: (context) => ProductInfo(
                             product: products[index],
                           ),
                         ),

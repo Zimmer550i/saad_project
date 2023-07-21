@@ -6,15 +6,15 @@ import 'package:uniwide/pages/sell_product.dart';
 import 'package:uniwide/resources/firebase_methods.dart';
 import 'package:uniwide/widgets/variants_list.dart';
 
-class ItemInfo extends StatefulWidget {
+class ProductInfo extends StatefulWidget {
   final Product product;
-  const ItemInfo({super.key, required this.product});
+  const ProductInfo({super.key, required this.product});
 
   @override
-  State<ItemInfo> createState() => _ItemInfoState();
+  State<ProductInfo> createState() => _ProductInfoState();
 }
 
-class _ItemInfoState extends State<ItemInfo> {
+class _ProductInfoState extends State<ProductInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

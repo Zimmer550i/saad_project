@@ -12,14 +12,14 @@ import 'package:uuid/uuid.dart';
 
 import '../models/product.dart';
 
-class AddItem extends StatefulWidget {
-  const AddItem({super.key});
+class AddProduct extends StatefulWidget {
+  const AddProduct({super.key});
 
   @override
-  State<AddItem> createState() => _AddItemState();
+  State<AddProduct> createState() => _AddItemState();
 }
 
-class _AddItemState extends State<AddItem> {
+class _AddItemState extends State<AddProduct> {
   XFile? image;
   TextEditingController prodName = TextEditingController();
   TextEditingController prodDiscription = TextEditingController();
