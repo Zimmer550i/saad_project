@@ -19,6 +19,7 @@ class _LoginState extends State<Login> {
   void signIn() async {
     setState(() {
       isLoading = true;
+      errorText = "";
     });
     String res =
         await FirebaseMethods().emailSignInUser(_email.text, _pass.text);
@@ -35,6 +36,7 @@ class _LoginState extends State<Login> {
       );
     } else {
       setState(() {
+        isLoading = false;
         errorText = res;
       });
     }
