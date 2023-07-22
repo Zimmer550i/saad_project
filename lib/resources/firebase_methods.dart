@@ -23,6 +23,12 @@ class FirebaseMethods {
     return downloadUrl;
   }
 
+Future<void> deleteImageFromStorage(String path) async {
+  Reference ref = _storage.ref().child(path);
+  ref.delete();
+}
+
+
   Future<AppUser> getUserData() async {
     User currentUser = _auth.currentUser!;
 
@@ -40,6 +46,18 @@ class FirebaseMethods {
           .doc(product.prodID)
           .set(product.toJson());
       return "Product has been Added";
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<String> updateProduct(Product product) async {
+    try {
+      _firestore
+          .collection("products")
+          .doc(product.prodID)
+          .update(product.toJson());
+      return "Product has been Updated";
     } catch (e) {
       return e.toString();
     }

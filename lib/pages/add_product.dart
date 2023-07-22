@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uniwide/models/variant.dart';
-import 'package:uniwide/pages/add_variant.dart';
 import 'package:uniwide/resources/firebase_methods.dart';
 import 'package:uniwide/utils.dart/constants.dart';
 import 'package:uuid/uuid.dart';
@@ -35,6 +34,15 @@ class _AddItemState extends State<AddProduct> {
 
   @override
   Widget build(BuildContext context) {
+    
+    if (variant.isNotEmpty) {
+      int count = 0;
+      for (var element in variant) {
+        count += element.quantity;
+      }
+      quantity.text = count.toString();
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(
@@ -83,7 +91,7 @@ class _AddItemState extends State<AddProduct> {
               ),
               const SizedBox(height: 5),
               dropdownValue == "Shoes"
-                  ? shoeSizeColor()
+                  ? productVariants()
                   : textInputField(
                       "Quantity",
                       quantity,
@@ -194,7 +202,7 @@ class _AddItemState extends State<AddProduct> {
                       onPressed: addProd,
                       child: isLoading
                           ? const CircularProgressIndicator()
-                          : const Text("Add This Product"),
+                          : const Text("Add Product"),
                     )
                   : ElevatedButton(
                       onPressed: () {
@@ -224,18 +232,14 @@ class _AddItemState extends State<AddProduct> {
         imagePath = await FirebaseMethods().uploadImageToStorage(path, temp);
       }
 
-      if (variant.isNotEmpty) {
-        int count = 0;
-        for (var element in variant) {
-          count += element.quantity;
-        }
-        quantity.text = count.toString();
-      }
+      int prodPrice =
+          (int.parse(overheadCost.text) / int.parse(quantity.text)).round() +
+              int.parse(price.text);
 
       var newItem = Product(
         prodID: prodID,
         name: prodName.text,
-        price: int.parse(price.text),
+        price: prodPrice,
         quantity: quantity.text.isNotEmpty ? int.parse(quantity.text) : 0,
         discription: prodDiscription.text,
         category: dropdownValue!,
@@ -256,23 +260,6 @@ class _AddItemState extends State<AddProduct> {
         res = "Please provide required informations";
       });
     }
-  }
-
-  Widget shoeSizeColor() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.only(top: 10),
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => AddVariant(list: variant),
-            ),
-          );
-        },
-        child: const Text("Choose Color and Size"),
-      ),
-    );
   }
 
   List<DropdownMenuItem<Object?>> dropdownItems() {
@@ -376,6 +363,92 @@ class _AddItemState extends State<AddProduct> {
           ),
         ),
         const SizedBox(height: 5),
+      ],
+    );
+  }
+
+  Wrap productVariants() {
+    TextEditingController variantSize = TextEditingController();
+    TextEditingController variantColor = TextEditingController();
+    TextEditingController variantQuantity = TextEditingController();
+
+    return Wrap(
+      runSpacing: 8,
+      spacing: 8,
+      alignment: WrapAlignment.spaceAround,
+      children: [
+        ...variant.map((e) {
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(8),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color.fromRGBO(0, 0, 0, 0.1),
+                      offset: Offset(1, 4),
+                      blurRadius: 4,
+                      spreadRadius: 3,
+                    ),
+                  ],
+                ),
+                padding: const EdgeInsets.all(8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${e.size} \u2022 ${e.color}",
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+              Text(" x ${e.quantity}"),
+            ],
+          );
+        }).toList(),
+        ElevatedButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text("Add Variant"),
+                actions: [
+                  textInputField("Size", variantSize),
+                  textInputField("Color", variantColor),
+                  textInputField("Quantity", variantQuantity),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Back")),
+                      TextButton(
+                          onPressed: () {
+                            setState(() {
+                              variant.add(Variant(
+                                quantity: int.parse(variantQuantity.text),
+                                size: variantSize.text,
+                                color: variantColor.text,
+                              ));
+                            });
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text("Add")),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+          child: const Text("Add Variant"),
+        )
       ],
     );
   }

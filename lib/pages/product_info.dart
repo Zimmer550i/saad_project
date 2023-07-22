@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:uniwide/models/product.dart';
+import 'package:uniwide/pages/edit_product.dart';
 import 'package:uniwide/pages/sell_product.dart';
 import 'package:uniwide/resources/firebase_methods.dart';
 import 'package:uniwide/widgets/variants_list.dart';
@@ -35,7 +36,9 @@ class _ProductInfoState extends State<ProductInfo> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_)=> EditProduct(product: widget.product)));
+              },
               child: const Row(
                 children: [
                   Icon(Icons.edit_note_rounded),
