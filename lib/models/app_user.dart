@@ -8,7 +8,7 @@ class AppUser {
   String lastName;
   String imgUrl;
   DateTime dateCreated;
-  bool isAdmin = false;
+  bool isAdmin;
   List<Product> cart = [];
   List<String> likes = [];
 
@@ -19,9 +19,9 @@ class AppUser {
     required this.firstName,
     required this.lastName,
     required this.imgUrl,
+    this.isAdmin = false,
   }): dateCreated = DateTime.now();
 
-  // Convert AppUser object to JSON
   Map<String, dynamic> toJson() {
     return {
       'userID': userID,
@@ -33,7 +33,6 @@ class AppUser {
     };
   }
 
-  // Create AppUser object from JSON
   factory AppUser.fromJson(Map<String, dynamic> json) {
     return AppUser(
       userID: json['userID'],
@@ -42,6 +41,7 @@ class AppUser {
       firstName: json['firstName'],
       lastName: json['lastName'],
       imgUrl: json['imgUrl'],
+      isAdmin: json['isAdmin'],
     );
   }
 }
