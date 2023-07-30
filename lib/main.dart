@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       title: "Uniwide Group",
       color: Colors.grey[300],
       theme: ThemeData(useMaterial3: true, fontFamily: "Geologica"),
+      // home: const SellHistory(),
       home: AnimatedSplashScreen(
         duration: 1000,
         animationDuration: const Duration(milliseconds: 500),

@@ -42,6 +42,9 @@ class ItemCard extends StatelessWidget {
                       placeholder: (context, url) {
                         return const Center(child: CircularProgressIndicator());
                       },
+                      placeholderFadeInDuration: const Duration(milliseconds: 200),
+                      fadeOutDuration: Duration.zero,
+                      fadeInDuration: Duration.zero,
                       height: 100,
                       width: 100,
                       fit: BoxFit.cover,

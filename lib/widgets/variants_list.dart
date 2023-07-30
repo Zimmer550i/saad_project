@@ -41,7 +41,7 @@ class _VariantsListState extends State<VariantsList> {
   @override
   Widget build(BuildContext context) {
     List<String> colorsList = getColorsList();
-    List<String> sizeList = getSizeList(colorsList[selectedColor]);
+    List<String> sizeList = colorsList.isNotEmpty ? getSizeList(colorsList[selectedColor]) : [];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

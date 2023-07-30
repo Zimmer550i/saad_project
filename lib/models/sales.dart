@@ -2,44 +2,54 @@ class Sales {
   String salesId;
   DateTime dateTime;
   String productId;
+  String productName;
+  String? comment; // Changed to optional String comment
   int quantity;
   int sellingPrice;
   int profit;
   String sellerId;
-  String? buyerName;
+  String buyerName;
 
   Sales({
     required this.salesId,
     required this.productId,
+    required this.productName,
+    this.comment, // Made String comment optional with '?'
     required this.sellingPrice,
     required this.sellerId,
     required this.profit,
     required this.quantity,
-    this.buyerName,
-  }) : dateTime = DateTime.now();
+    required this.buyerName,
+    required this.dateTime,
+  });
 
   factory Sales.fromJson(Map<String, dynamic> json) {
     return Sales(
       salesId: json['salesId'],
       productId: json['productId'],
+      productName: json['productName'],
+      comment: json['comment'], 
       sellingPrice: json['sellingPrice'],
       sellerId: json['sellerId'],
       profit: json['profit'],
       quantity: json['quantity'],
       buyerName: json['buyerName'],
-    )..dateTime = DateTime.parse(json['dateTime']);
+      dateTime: DateTime.parse(json['dateTime']),
+    );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'salesId': salesId,
-      'dateTime': dateTime.toIso8601String(),
       'productId': productId,
+      'productName': productName,
+      'comment': comment, // Now it can be null in the JSON representation
       'sellingPrice': sellingPrice,
       'sellerId': sellerId,
-      'buyerName': buyerName,
-      'quantity' : quantity,
       'profit': profit,
+      'quantity': quantity,
+      'buyerName': buyerName,
+      'dateTime': dateTime.toIso8601String(),
     };
   }
 }

@@ -34,7 +34,6 @@ class _AddItemState extends State<AddProduct> {
 
   @override
   Widget build(BuildContext context) {
-    
     if (variant.isNotEmpty) {
       int count = 0;
       for (var element in variant) {
@@ -45,11 +44,8 @@ class _AddItemState extends State<AddProduct> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
-          onTap: () => Navigator.of(context).pop(),
-          child: const Icon(Icons.arrow_back_ios_new_rounded),
-        ),
         title: const Text("Add Product"),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -205,10 +201,8 @@ class _AddItemState extends State<AddProduct> {
                           : const Text("Add Product"),
                     )
                   : ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text("Go Back"),
+                      onPressed: () {},
+                      child: const Icon(Icons.check_rounded),
                     ),
             ],
           ),
@@ -232,9 +226,11 @@ class _AddItemState extends State<AddProduct> {
         imagePath = await FirebaseMethods().uploadImageToStorage(path, temp);
       }
 
-      int prodPrice =
-          (int.parse(overheadCost.text) / int.parse(quantity.text)).round() +
-              int.parse(price.text);
+      int prodPrice = int.parse(price.text);
+      if (overheadCost.text.isNotEmpty) {
+        prodPrice +=
+            (int.parse(overheadCost.text) / int.parse(quantity.text)).round();
+      }
 
       var newItem = Product(
         prodID: prodID,
@@ -249,8 +245,6 @@ class _AddItemState extends State<AddProduct> {
       );
 
       res = await FirebaseMethods().uploadProduct(newItem);
-
-      setState(() {});
 
       setState(() {
         isLoading = false;

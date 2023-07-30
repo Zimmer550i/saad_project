@@ -127,7 +127,7 @@ Future<void> deleteImageFromStorage(String path) async {
 
   Future<String> createSales(Sales sales, Product product) async {
     try {
-      String monthYear = "${DateTime.now().month}_${DateTime.now().year}";
+      String monthYear = "${sales.dateTime.month}_${sales.dateTime.year}";
       int prevProfit = 0;
       // _firestore.collection("sales").doc(monthYear).collection('sales_items').doc(sales.salesId).set(sales.toJson());
       DocumentSnapshot snapshot =
@@ -154,7 +154,7 @@ Future<void> deleteImageFromStorage(String path) async {
       _firestore
           .collection("products")
           .doc(product.prodID)
-          .update({"quantity": product.quantity - sales.quantity});
+          .set(product.toJson());
       return "Sales information has been saved";
     } catch (e) {
       return e.toString();

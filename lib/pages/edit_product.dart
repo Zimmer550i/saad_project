@@ -455,10 +455,12 @@ class _AddItemState extends State<EditProduct> {
     if (image != null) {
       String path = "products/${widget.product.prodID}.jpg";
       Uint8List temp = await File(image!.path).readAsBytes();
-      widget.product.photoUrl = await FirebaseMethods().uploadImageToStorage(path, temp);
+      widget.product.photoUrl =
+          await FirebaseMethods().uploadImageToStorage(path, temp);
     }
-    if(fileExistsInStorage && image == null && widget.product.photoUrl == ""){
-      FirebaseMethods().deleteImageFromStorage("products/${widget.product.prodID}.jpg");
+    if (fileExistsInStorage && image == null && widget.product.photoUrl == "") {
+      FirebaseMethods()
+          .deleteImageFromStorage("products/${widget.product.prodID}.jpg");
     }
 
     widget.product.name = prodName.text;
@@ -467,6 +469,14 @@ class _AddItemState extends State<EditProduct> {
     widget.product.quantity = int.parse(quantity.text);
     widget.product.variant = variant;
     widget.product.category = dropdownValue!;
+
+    if (widget.product.variant.isNotEmpty) {
+      int count = 0;
+      for (var i in variant) {
+        count += i.quantity;
+      }
+      widget.product.quantity = count;
+    }
 
     res = await FirebaseMethods().updateProduct(widget.product);
 
