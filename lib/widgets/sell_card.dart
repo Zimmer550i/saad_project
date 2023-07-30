@@ -24,6 +24,7 @@ class SellCard extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,9 +43,16 @@ class SellCard extends StatelessWidget {
                       color: Colors.black.withAlpha(200),
                     ),
                   ),
+                  Text(
+                    "${sales.quantity} pcs",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black.withAlpha(200),
+                    ),
+                  ),
                 ],
               ),
-              Text("Date: ${sales.dateTime.day}"),
+              Text("Date: ${sales.dateTime.day}/${sales.dateTime.month}/${sales.dateTime.year}"),
             ],
           ),
           sales.comment == null

@@ -221,12 +221,14 @@ class _SellProductState extends State<SellProduct> {
           comment: _comment.text,
         );
 
-        widget.product.variant = variantCopy;
-        int count = 0;
-        for (var i in widget.product.variant) {
-          count += i.quantity;
+        if (widget.product.category == "Shoes") {
+          widget.product.variant = variantCopy;
+          int count = 0;
+          for (var i in widget.product.variant) {
+            count += i.quantity;
+          }
+          widget.product.quantity = count;
         }
-        widget.product.quantity = count;
 
         String res = await FirebaseMethods().createSales(temp, product);
 

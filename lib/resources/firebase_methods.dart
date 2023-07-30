@@ -129,7 +129,6 @@ Future<void> deleteImageFromStorage(String path) async {
     try {
       String monthYear = "${sales.dateTime.month}_${sales.dateTime.year}";
       int prevProfit = 0;
-      // _firestore.collection("sales").doc(monthYear).collection('sales_items').doc(sales.salesId).set(sales.toJson());
       DocumentSnapshot snapshot =
           await _firestore.collection("sales").doc(monthYear).get();
 
